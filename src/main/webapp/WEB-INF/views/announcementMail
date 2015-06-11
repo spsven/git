@@ -1,0 +1,9 @@
+<#-- @ftlvariable name="course" type="com.epam.edu.jtc.entity.Courses" -->
+${course.getCoursesOwner()} had created a new course
+------------------------------------------------------
+Name: ${course.getCoursesName()}
+Category: ${course.getCategory().getCategoryName()}
+Description:${course.getCoursesDescription()}
+Links: ${course.getCoursesLinks()}
+------------------------------------------------------
+Please, review this course at http://localhost:8080/training-center-ak/courses/${course.getCoursesID()}/update

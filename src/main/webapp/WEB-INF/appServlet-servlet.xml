@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- Freemarker config -->
+    <bean id="beansWrapper" class="freemarker.ext.beans.BeansWrapper">
+        <property name="outerIdentity" value="SIMPLE_WRAPPER"/>
+    </bean>
+
+    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer"
+          p:templateLoaderPaths="/WEB-INF/views/">
+        <property name="freemarkerVariables">
+            <map>
+                <entry key="objectWrapper" value-ref="beansWrapper"/>
+            </map>
+        </property>
+    </bean>
+
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver"
+          p:suffix=".ftl" p:cache="false" p:prefix=""/>
+
+    <context:component-scan base-package="com.epam.edu.jtc"/>
+
+
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl" p:host="smtp.gmail.com"
+          p:username="pratunkov@gmail.com" p:port="587" p:password="@1vpolenevoin@@">
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.smtp.auth">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="mailMail" class="com.epam.edu.jtc.web.CourseSendMailController">
+        <property name="mailSender" ref="mailSender"/>
+    </bean>
+
+
+</beans>
